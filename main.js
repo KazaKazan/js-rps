@@ -1,72 +1,108 @@
-const choiceList = ["rock", "paper", "scissors"];
+/* ==VARIABLES== */
 
-function playerSelection() {
-    let selection = -1;
-    let template = "What will you play?";
+/*Document elements */
+const aboutButton = document.getElementsByClassName("button about")[0];
+const aboutCard = document.getElementsByClassName("blocker info")[0];
 
-    while (selection = -1) {
-        var input = prompt(template).toLocaleLowerCase("en-US");
-        selection = choiceList.indexOf(input);
-        template = "What will you play?\nMake a valid choice!"
-        if (selection != -1) break;
-    };
-    
-    return selection
+/* Game elements */
+const rockButton = document.getElementsByClassName("button rock")[0];
+const paperButton = document.getElementsByClassName("button paper")[0];
+const scissorsButton = document.getElementsByClassName("button scissors")[0];
+const replayButton = document.getElementsByClassName("button replay")[0];
+const gameText = document.getElementsByClassName("game-text")[0];
+const rounds = document.getElementsByClassName("rounds")[0].children;
+const endCard = document.getElementsByClassName("blocker end")[0];
+const endTitle = document.getElementsByClassName("end-title")[0];
+const endText = document.getElementsByClassName("end-text")[0];
+
+/* ==DOCUMENT FUNCTIONS== */
+
+aboutButton.onclick = function () {
+    aboutCard.classList.toggle("hide")
 }
 
-function gameRound() {
+/* ==GAME FUNCTIONS== */
+const gameObject = {
+    round: 0,
+    playerScore: 0,
+    computerScore: 0,
+};
+
+function makeMove(playerMove) {
     
-    let playerMove = playerSelection();
+    const moves = ["rock","paper","scissors"];
     let computerMove = Math.floor(Math.random()*3);
 
     if (playerMove == computerMove) {
-        console.log("Tie!")
-        return 0
+        advanceRound("tie",moves[computerMove]);
     }
     else if (playerMove-computerMove == 1 || playerMove-computerMove == -2) {
-        console.log(`You win the round! ${choiceList[playerMove]} beats ${choiceList[computerMove]}!`)
-        return 1
+        advanceRound("player",moves[computerMove]);
     }
     else {
-        console.log(`You lose the round! ${choiceList[computerMove]} beats ${choiceList[playerMove]}!`)
-        return 2
+        advanceRound("computer",moves[computerMove]);
     }
+};
 
-}
-
-function gameMain() {
-    let round = 1;
-    let playerScore = 0;
-    let computerScore = 0;
-
-    while (round <= 5) {
-        console.log(`Round ${round} start!`)
-        let winner = gameRound();
-        switch (winner) {
-            case 1:
-                playerScore += 1
-                break
-            case 2:
-                computerScore += 1
-                break
-            default:
-                break
-        }
-        round++
+function advanceRound(winner,computer) {
+    switch (winner) {
+        case "player":
+            gameObject.playerScore += 1;
+            rounds[gameObject.round].src = "assets/win.svg";
+            gameText.textContent = `Computer plays ${computer}. Round Won!`;
+            break
+        case "computer":
+            gameObject.computerScore += 1;
+            rounds[gameObject.round].src = "assets/lose.svg";
+            gameText.textContent = `Computer plays ${computer}. Round Lost!`;
+            break
+        default:
+            rounds[gameObject.round].src = "assets/tie.svg";
+            gameText.textContent = `Computer plays ${computer}. It's a tie!`;
+            break
     }
+    
+    gameObject.round++
 
-    if (playerScore > computerScore) {
-        console.log("You win the game!")
+    if (gameObject.round == 5) {
+        endGame()
     }
+};
 
-    else if (playerScore < computerScore) {
-        console.log("You lose the game!")
+function endGame() {
+    if (gameObject.playerScore > gameObject.computerScore) {
+        endTitle.textContent = "Game Won :)"
     }
-
+    else if (gameObject.playerScore < gameObject.computerScore) {
+        endTitle.textContent = "Game Lost :("
+    }
     else {
-        console.log("It's a tie!")
+        endTitle.textContent = "It's a Tie :|"
     }
+    endText.textContent = `Your Score: ${gameObject.playerScore} Computer's Score: ${gameObject.computerScore}`;
+    endCard.classList.toggle("hide")
+};
 
+function reset() {
+    gameObject.round = 0;
+    gameObject.playerScore = 0;
+    gameObject.computerScore = 0;
+    for (let i = 0; i < rounds.length; i++) {
+        rounds[i].src = "assets/empty.svg"
+    };
+    gameText.textContent = "ROCK, PAPER, SCISSORS!"
 }
 
-gameMain()
+rockButton.onclick = function () {
+    makeMove(0)
+};
+paperButton.onclick = function () {
+    makeMove(1)
+};
+scissorsButton.onclick = function () {
+    makeMove(2)
+};
+replayButton.onclick = function () {
+    reset()
+    endCard.classList.toggle("hide");
+};

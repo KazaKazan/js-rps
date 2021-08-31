@@ -4,10 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
-    <script src="main.js"></script>
+    <title>Rock Paper Scissors!</title>
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <button class="button about"><img src="assets/about.svg" alt="About"></button>
+    <div class="game-container">
+        <div class="game">
+            <p class="game-text" style="font-size: 40px;">ROCK, PAPER, SCISSORS!</p>
+            <div class="buttons">
+                <button class="button rock"><img src="assets/rock.svg" alt="Rock"></button>
+                <button class="button paper"><img src="assets/paper.svg" alt="Paper"></button>
+                <button class="button scissors"><img src="assets/scissors.svg" alt="Scissors"></button>
+            </div>
+            <div class="rounds">
+                <img src="assets/empty.svg" alt="Round 1" class="round round-one">
+                <img src="assets/empty.svg" alt="Round 2" class="round round-two">
+                <img src="assets/empty.svg" alt="Round 3" class="round round-three">
+                <img src="assets/empty.svg" alt="Round 4" class="round round-four">
+                <img src="assets/empty.svg" alt="Round 5" class="round round-five">
+            </div>
+        </div>
+    </div>
+    <div class="blocker end hide">
+        <div class="card">
+            <p class="end-title" style="font-weight: bolder; font-size: large;">Placeholder</p>
+            <p class="end-text">Placeholder</p>
+            <p style="font-style: italic;">Play again?</p>
+            <button class="button replay"><img src="assets/replay.svg" alt="About"></button>
+        </div>
+    </div>
+    <div class="blocker info hide">
+        <div class="card">
+            <p style="font-weight: bolder;"> Rock, Paper, Scissors!</p>
+            <p style="margin-top: 0px;">A game by Ahmet Fırat Usta</p>
+            <a href="https://github.com/KazaKazan" class="github"><img src="assets/github.svg" alt="GitHub"></a>
+            <p style="font-style: italic; margin: 10px;">All emojis designed by OpenMoji – the open-source emoji and icon project. License: CC BY-SA 4.0</p>
+        </div>
+    </div>
 </body>
 </html>
